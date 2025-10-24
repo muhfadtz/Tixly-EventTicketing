@@ -4,6 +4,7 @@ import { db } from '../services/firebase';
 import firebase from 'firebase/compat/app'; // Needed for Timestamp
 import { Event } from '../types';
 import { useAuth } from '../contexts/AuthContext';
+import Spinner from '../components/Spinner';
 
 const EventDetail: React.FC = () => {
   const { id } = useParams<{ id: string }>();
@@ -100,7 +101,7 @@ const EventDetail: React.FC = () => {
     }
   };
 
-  if (loading) return <div className="text-center mt-10 text-muted-foreground">Loading event...</div>;
+  if (loading) return <div className="flex justify-center mt-10"><Spinner /></div>;
   if (error) return <div className="text-center mt-10 text-destructive">{error}</div>;
   if (!event) return <div className="text-center mt-10">Event could not be loaded.</div>;
 
@@ -127,8 +128,9 @@ const EventDetail: React.FC = () => {
         
         {appUser?.role === 'peserta' ? (
           checkingRegistration ? (
-             <button disabled className="w-full bg-muted text-muted-foreground px-8 py-3 rounded-lg text-lg font-bold cursor-not-allowed">
-                Checking registration status...
+             <button disabled className="w-full bg-muted text-muted-foreground px-8 py-3 rounded-lg text-lg font-bold cursor-not-allowed flex justify-center items-center">
+                <Spinner size="sm" />
+                <span className="ml-2">Checking status...</span>
             </button>
           ) : isAlreadyRegistered ? (
              <div className="text-center text-green-500 bg-green-500/10 p-4 rounded-lg">
@@ -143,9 +145,14 @@ const EventDetail: React.FC = () => {
             <button
                 onClick={handleRegister}
                 disabled={registering}
-                className="w-full bg-primary text-primary-foreground hover:bg-primary/90 px-8 py-3 rounded-lg text-lg font-bold transition-colors disabled:bg-muted disabled:text-muted-foreground disabled:cursor-not-allowed"
+                className="w-full bg-primary text-primary-foreground hover:bg-primary/90 px-8 py-3 rounded-lg text-lg font-bold transition-colors disabled:bg-muted disabled:text-muted-foreground disabled:cursor-not-allowed flex justify-center items-center"
             >
-                {registering ? 'Registering...' : 'Register Now'}
+                {registering ? (
+                  <>
+                    <Spinner size="sm" className="text-primary-foreground" />
+                    <span className="ml-2">Registering...</span>
+                  </>
+                ) : 'Register Now'}
             </button>
           )
         ) : (

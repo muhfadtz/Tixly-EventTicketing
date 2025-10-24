@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { auth } from '../services/firebase';
 import { useNavigate, Link } from 'react-router-dom';
 import { useAuth } from '../contexts/AuthContext';
+import Spinner from '../components/Spinner';
 
 const Login: React.FC = () => {
   const [email, setEmail] = useState('');
@@ -66,9 +67,16 @@ const Login: React.FC = () => {
           <button
             type="submit"
             disabled={loading}
-            className="w-full py-2 px-4 bg-primary hover:bg-primary/90 text-primary-foreground font-semibold rounded-md transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
+            className="w-full py-2 px-4 bg-primary hover:bg-primary/90 text-primary-foreground font-semibold rounded-md transition-colors disabled:opacity-50 disabled:cursor-not-allowed flex justify-center items-center"
           >
-            {loading ? 'Logging in...' : 'Login'}
+            {loading ? (
+              <>
+                <Spinner size="sm" className="text-primary-foreground" />
+                <span className="ml-2">Logging in...</span>
+              </>
+            ) : (
+              'Login'
+            )}
           </button>
         </form>
          <p className="text-sm text-center text-muted-foreground">

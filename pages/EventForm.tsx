@@ -4,6 +4,7 @@ import { db } from '../services/firebase';
 import firebase from 'firebase/compat/app';
 import { useAuth } from '../contexts/AuthContext';
 import { Event } from '../types';
+import Spinner from '../components/Spinner';
 
 const EventForm: React.FC = () => {
   const { id } = useParams<{ id: string }>();
@@ -17,6 +18,7 @@ const EventForm: React.FC = () => {
   const [deskripsiSingkat, setDeskripsiSingkat] = useState('');
   
   const [loading, setLoading] = useState(false);
+  const [formLoading, setFormLoading] = useState(false); // For submission
   const [error, setError] = useState('');
   
   const isEditMode = Boolean(id);
@@ -59,7 +61,7 @@ const EventForm: React.FC = () => {
       return;
     }
     setError('');
-    setLoading(true);
+    setFormLoading(true);
 
     try {
       const eventDate = new Date(tanggal);
@@ -87,14 +89,18 @@ const EventForm: React.FC = () => {
       setError(err.message);
       console.error(err);
     } finally {
-      setLoading(false);
+      setFormLoading(false);
     }
   };
 
   const inputStyles = "w-full px-3 py-2 mt-1 text-foreground bg-background border border-input rounded-md focus:outline-none focus:ring-2 focus:ring-ring";
 
-  if (loading && isEditMode) {
-      return <p className="text-center text-muted-foreground">Loading event details...</p>
+  if (loading) {
+      return (
+        <div className="flex justify-center items-center h-[calc(100vh-12rem)]">
+            <Spinner size="lg" />
+        </div>
+      );
   }
 
   return (
@@ -136,8 +142,8 @@ const EventForm: React.FC = () => {
              <button type="button" onClick={() => navigate('/panitia/dashboard')} className="py-2 px-4 bg-secondary text-secondary-foreground hover:bg-secondary/80 font-semibold rounded-md transition-colors">
                 Cancel
             </button>
-            <button type="submit" disabled={loading} className="py-2 px-4 bg-primary hover:bg-primary/90 text-primary-foreground font-semibold rounded-md transition-colors disabled:opacity-50 disabled:cursor-not-allowed">
-              {loading ? 'Saving...' : (isEditMode ? 'Save Changes' : 'Create Event')}
+            <button type="submit" disabled={formLoading} className="py-2 px-4 bg-primary hover:bg-primary/90 text-primary-foreground font-semibold rounded-md transition-colors disabled:opacity-50 disabled:cursor-not-allowed flex justify-center items-center min-w-[140px]">
+              {formLoading ? <Spinner size="sm" /> : (isEditMode ? 'Save Changes' : 'Create Event')}
             </button>
           </div>
         </form>

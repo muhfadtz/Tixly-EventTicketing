@@ -3,6 +3,7 @@ import { Link, useNavigate } from 'react-router-dom';
 import { db } from '../services/firebase';
 import { useAuth } from '../contexts/AuthContext';
 import { Event } from '../types';
+import Spinner from '../components/Spinner';
 
 const EventTable: React.FC<{ 
   events: Event[]; 
@@ -118,50 +119,62 @@ const OrganizerDashboard: React.FC = () => {
         alert(`Event ${newStatus ? 'published' : 'unpublished'} successfully.`);
         fetchEvents();
     } catch (error) {
-        console.error('Error updating event status:', error);
+        console.error('Error updating event publish status:', error);
         alert('Failed to update event status.');
     }
   };
 
   if (loading) {
-    return <div className="text-center mt-10 text-muted-foreground">Loading your dashboard...</div>;
+    return (
+      <div className="flex justify-center items-center h-[calc(100vh-12rem)]">
+        <Spinner size="lg" />
+      </div>
+    );
   }
 
   return (
     <div className="container mx-auto px-4">
       <div className="flex flex-wrap justify-between items-center gap-4 mb-8">
-        <h1 className="text-4xl font-bold text-foreground">Organizer Dashboard</h1>
-        <div className="space-x-4">
-          <Link to="/panitia/checkin" className="bg-secondary text-secondary-foreground hover:bg-secondary/80 px-5 py-2 rounded-md font-medium transition-colors">
-            Check-In
-          </Link>
-           <Link to="/panitia/events/new" className="bg-primary text-primary-foreground hover:bg-primary/90 px-5 py-2 rounded-md font-medium transition-colors">
-            + Create New Event
-          </Link>
+        <h1 className="text-4xl font-bold text-foreground">My Events</h1>
+        <div className="flex items-center space-x-4">
+            <Link to="/panitia/checkin" className="bg-secondary text-secondary-foreground hover:bg-secondary/80 px-4 py-2 rounded-md text-sm font-medium">
+                Scan Ticket
+            </Link>
+            <Link to="/panitia/events/new" className="bg-primary text-primary-foreground hover:bg-primary/90 px-4 py-2 rounded-md text-sm font-medium">
+                Create New Event
+            </Link>
         </div>
       </div>
 
-      <div className="space-y-10">
-        <div className="bg-card border border-border rounded-lg shadow-sm overflow-hidden">
-            <div className="p-6">
-                <h2 className="text-2xl font-semibold mb-4 text-foreground">Unpublished Drafts</h2>
-                {unpublishedEvents.length > 0 ? (
-                    <EventTable events={unpublishedEvents} onDelete={handleDelete} onPublishToggle={handlePublishToggle} />
-                ) : (
-                    <p className="text-center py-8 text-muted-foreground">You have no unpublished events.</p>
-                )}
+      <div className="space-y-12">
+        <div>
+          <h2 className="text-2xl font-semibold mb-4 text-foreground">Published Events</h2>
+          {publishedEvents.length > 0 ? (
+            <div className="bg-card border border-border rounded-lg shadow-sm overflow-hidden">
+                <EventTable events={publishedEvents} onDelete={handleDelete} onPublishToggle={handlePublishToggle} />
             </div>
+          ) : (
+            <div className="text-center py-16 px-4 bg-card border border-dashed border-border rounded-lg">
+                <i data-lucide="calendar-check" className="mx-auto h-12 w-12 text-muted-foreground"></i>
+                <h3 className="mt-4 text-lg font-semibold">No Published Events</h3>
+                <p className="mt-2 text-sm text-muted-foreground">You have no published events. Create one or publish a draft.</p>
+            </div>
+          )}
         </div>
 
-        <div className="bg-card border border-border rounded-lg shadow-sm overflow-hidden">
-            <div className="p-6">
-                <h2 className="text-2xl font-semibold mb-4 text-foreground">Published Events</h2>
-                {publishedEvents.length > 0 ? (
-                    <EventTable events={publishedEvents} onDelete={handleDelete} onPublishToggle={handlePublishToggle} />
-                ) : (
-                    <p className="text-center py-8 text-muted-foreground">You haven't published any events yet.</p>
-                )}
+        <div>
+          <h2 className="text-2xl font-semibold mb-4 text-foreground">Drafts</h2>
+           {unpublishedEvents.length > 0 ? (
+            <div className="bg-card border border-border rounded-lg shadow-sm overflow-hidden">
+                <EventTable events={unpublishedEvents} onDelete={handleDelete} onPublishToggle={handlePublishToggle} />
             </div>
+          ) : (
+            <div className="text-center py-16 px-4 bg-card border border-dashed border-border rounded-lg">
+                <i data-lucide="edit-3" className="mx-auto h-12 w-12 text-muted-foreground"></i>
+                <h3 className="mt-4 text-lg font-semibold">No Drafts</h3>
+                <p className="mt-2 text-sm text-muted-foreground">You have no draft events.</p>
+            </div>
+          )}
         </div>
       </div>
     </div>

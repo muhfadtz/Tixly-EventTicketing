@@ -2,12 +2,19 @@ import React, { useState, useEffect } from 'react';
 import { useParams, Link } from 'react-router-dom';
 import { db } from '../services/firebase';
 import { Ticket, Event } from '../types';
+import Spinner from '../components/Spinner';
 
 const EventAttendees: React.FC = () => {
   const { id: eventId } = useParams<{ id: string }>();
   const [attendees, setAttendees] = useState<Ticket[]>([]);
   const [event, setEvent] = useState<Event | null>(null);
   const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    // @ts-ignore
+    window.lucide?.createIcons();
+  }, []);
+
 
   useEffect(() => {
     if (!eventId) return;
@@ -37,7 +44,11 @@ const EventAttendees: React.FC = () => {
   }, [eventId]);
 
   if (loading) {
-    return <div className="text-center mt-10 text-muted-foreground">Loading attendees...</div>;
+    return (
+        <div className="flex justify-center items-center h-[calc(100vh-12rem)]">
+            <Spinner size="lg" />
+        </div>
+    );
   }
   
   return (

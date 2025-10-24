@@ -3,6 +3,7 @@ import firebase from 'firebase/compat/app';
 import 'firebase/compat/auth';
 import { auth, db } from '../services/firebase';
 import { AppUser } from '../types';
+import Spinner from '../components/Spinner';
 
 interface AuthContextType {
   currentUser: firebase.User | null;
@@ -44,7 +45,17 @@ export const AuthProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
     loading,
   };
 
-  return <AuthContext.Provider value={value}>{!loading && children}</AuthContext.Provider>;
+  return (
+    <AuthContext.Provider value={value}>
+      {loading ? (
+        <div className="flex justify-center items-center h-screen bg-background" role="status" aria-label="Loading application">
+          <Spinner size="lg" className="text-primary" />
+        </div>
+      ) : (
+        children
+      )}
+    </AuthContext.Provider>
+  );
 };
 
 export const useAuth = () => {

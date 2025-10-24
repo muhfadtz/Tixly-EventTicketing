@@ -4,6 +4,7 @@ import { useAuth } from '../contexts/AuthContext';
 import { Ticket, Event } from '../types';
 import { QRCodeCanvas } from 'qrcode.react';
 import { Link } from 'react-router-dom';
+import Spinner from '../components/Spinner';
 
 const TicketCard: React.FC<{ ticket: Ticket }> = ({ ticket }) => {
     useEffect(() => {
@@ -136,7 +137,7 @@ const MyTickets: React.FC = () => {
   }, [currentUser]);
 
   if (loading) {
-    return <div className="text-center mt-10 text-muted-foreground">Loading your tickets...</div>;
+    return <div className="flex justify-center mt-10"><Spinner /></div>;
   }
 
   return (

@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { db } from '../services/firebase';
 import { Event } from '../types';
 import { Link } from 'react-router-dom';
+import Spinner from '../components/Spinner';
 
 const EventCard: React.FC<{ event: Event }> = ({ event }) => {
   useEffect(() => {
@@ -68,7 +69,7 @@ const EventsList: React.FC = () => {
   }, []);
 
   if (loading) {
-    return <div className="text-center mt-10 text-muted-foreground">Loading events...</div>;
+    return <div className="flex justify-center mt-10"><Spinner /></div>;
   }
 
   return (

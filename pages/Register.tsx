@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { auth, db } from '../services/firebase';
 import { useNavigate, Link } from 'react-router-dom';
 import { AppUser } from '../types';
+import Spinner from '../components/Spinner';
 
 const Register: React.FC = () => {
   const [namaLengkap, setNamaLengkap] = useState('');
@@ -107,9 +108,16 @@ const Register: React.FC = () => {
           <button
             type="submit"
             disabled={loading}
-            className="w-full py-2 px-4 bg-primary hover:bg-primary/90 text-primary-foreground font-semibold rounded-md transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
+            className="w-full py-2 px-4 bg-primary hover:bg-primary/90 text-primary-foreground font-semibold rounded-md transition-colors disabled:opacity-50 disabled:cursor-not-allowed flex justify-center items-center"
           >
-            {loading ? 'Creating account...' : 'Register'}
+            {loading ? (
+                <>
+                  <Spinner size="sm" className="text-primary-foreground" />
+                  <span className="ml-2">Creating account...</span>
+                </>
+            ) : (
+                'Register'
+            )}
           </button>
         </form>
          <p className="text-sm text-center text-muted-foreground">

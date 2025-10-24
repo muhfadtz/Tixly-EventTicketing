@@ -3,6 +3,7 @@ import React from 'react';
 import { Navigate, Outlet } from 'react-router-dom';
 import { useAuth } from '../contexts/AuthContext';
 import { AppUser } from '../types';
+import Spinner from './Spinner';
 
 interface ProtectedRouteProps {
   allowedRoles: Array<AppUser['role']>;
@@ -14,7 +15,8 @@ const ProtectedRoute: React.FC<ProtectedRouteProps> = ({ allowedRoles }) => {
   if (loading) {
     return (
       <div className="flex justify-center items-center h-[calc(100vh-8rem)]">
-        <div className="text-lg text-muted-foreground">Authenticating...</div>
+        <Spinner />
+        <span className="sr-only">Authenticating...</span>
       </div>
     );
   }
