@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useMemo } from 'react';
 import { db } from '../services/firebase';
 import { Event } from '../types';
 import { Link } from 'react-router-dom';
@@ -44,6 +44,7 @@ const EventCard: React.FC<{ event: Event }> = ({ event }) => {
 const EventsList: React.FC = () => {
   const [events, setEvents] = useState<Event[]>([]);
   const [loading, setLoading] = useState(true);
+  const [searchQuery, setSearchQuery] = useState('');
 
   useEffect(() => {
     const fetchEvents = async () => {
@@ -67,6 +68,22 @@ const EventsList: React.FC = () => {
 
     fetchEvents();
   }, []);
+  
+  const filteredEvents = useMemo(() => {
+    if (!searchQuery) {
+      return events;
+    }
+    const lowercasedQuery = searchQuery.toLowerCase();
+    return events.filter(event => 
+        event.namaAcara.toLowerCase().includes(lowercasedQuery) || 
+        event.lokasi.toLowerCase().includes(lowercasedQuery)
+    );
+  }, [events, searchQuery]);
+
+  useEffect(() => {
+    // @ts-ignore
+    window.lucide?.createIcons();
+  });
 
   if (loading) {
     return <div className="flex justify-center mt-10"><Spinner /></div>;
@@ -74,13 +91,38 @@ const EventsList: React.FC = () => {
 
   return (
     <div className="container mx-auto px-4">
-      <h1 className="text-4xl font-bold text-center mb-12 text-foreground">Upcoming Events</h1>
-      {events.length > 0 ? (
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-          {events.map(event => (
-            <EventCard key={event.id} event={event} />
-          ))}
+      <h1 className="text-4xl font-bold text-center mb-6 text-foreground">Upcoming Events</h1>
+      
+      <div className="mb-10 max-w-lg mx-auto">
+        <div className="relative">
+          <span className="absolute inset-y-0 left-0 flex items-center pl-3" aria-hidden="true">
+            <i data-lucide="search" className="h-5 w-5 text-muted-foreground"></i>
+          </span>
+          <input
+            type="text"
+            placeholder="Search by event name or location..."
+            value={searchQuery}
+            onChange={(e) => setSearchQuery(e.target.value)}
+            className="w-full pl-10 pr-4 py-2 text-foreground bg-background border border-input rounded-md focus:outline-none focus:ring-2 focus:ring-ring"
+            aria-label="Search events"
+          />
         </div>
+      </div>
+      
+      {events.length > 0 ? (
+        filteredEvents.length > 0 ? (
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+            {filteredEvents.map(event => (
+                <EventCard key={event.id} event={event} />
+            ))}
+            </div>
+        ) : (
+            <div className="text-center py-16 px-4 bg-card border border-dashed border-border rounded-lg">
+                <i data-lucide="search-x" className="mx-auto h-12 w-12 text-muted-foreground"></i>
+                <h3 className="mt-4 text-lg font-semibold">No Results Found</h3>
+                <p className="mt-2 text-sm text-muted-foreground">Your search for "{searchQuery}" did not match any events.</p>
+            </div>
+        )
       ) : (
         <div className="text-center py-16 px-4 bg-card border border-dashed border-border rounded-lg">
           <i data-lucide="calendar-x" className="mx-auto h-12 w-12 text-muted-foreground"></i>
