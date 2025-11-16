@@ -52,7 +52,7 @@ const Login: React.FC = () => {
               onChange={(e) => setEmail(e.target.value)}
               required
               placeholder="Masukkan email Anda"
-              className="w-full px-3 py-2 mt-1 text-foreground bg-background border border-input rounded-md focus:outline-none focus:ring-2 focus:ring-ring placeholder:text-sm"
+              className="w-full px-3 py-2 mt-0.5 text-foreground bg-background border border-input rounded-md focus:outline-none focus:ring-2 focus:ring-ring placeholder:text-sm"
             />
           </div>
           <div>
@@ -63,7 +63,7 @@ const Login: React.FC = () => {
               onChange={(e) => setPassword(e.target.value)}
               required
               placeholder="Masukkan kata sandi Anda"
-              className="w-full px-3 py-2 mt-1 text-foreground bg-background border border-input rounded-md focus:outline-none focus:ring-2 focus:ring-ring placeholder:text-sm"
+              className="w-full px-3 py-2 mt-0.5 text-foreground bg-background border border-input rounded-md focus:outline-none focus:ring-2 focus:ring-ring placeholder:text-sm"
             />
           </div>
           <button

@@ -38,7 +38,7 @@ const Register: React.FC = () => {
       }
 
     } catch (err: any) {
-       setError(err.code === 'auth/email-already-in-use' ? 'This email is already registered.' : 'Failed to register. Please try again.');
+       setError(err.code === 'auth/email-already-in-use' ? 'Email ini sudah terdaftar.' : 'Gagal mendaftar. Silakan coba lagi.');
     } finally {
         setLoading(false);
     }
@@ -51,7 +51,7 @@ const Register: React.FC = () => {
             <h2 className="text-3xl font-bold text-foreground">Buat akun baru</h2>
             <p className="text-muted-foreground">Bergabung dengan Tixly hari ini</p>
         </div>
-        <form onSubmit={handleSubmit} className="space-y-6">
+        <form onSubmit={handleSubmit} className="space-y-4">
           {error && <p className="text-sm text-destructive text-center bg-destructive/10 border border-destructive/20 rounded-md p-3">{error}</p>}
           
           <div>
@@ -82,7 +82,7 @@ const Register: React.FC = () => {
               onChange={(e) => setNamaLengkap(e.target.value)}
               required
               placeholder="Masukkan nama lengkap Anda"
-              className="w-full px-3 py-2 mt-1 text-foreground bg-background border border-input rounded-md focus:outline-none focus:ring-2 focus:ring-ring placeholder:text-sm"
+              className="w-full px-3 py-2 mt-0.5 text-foreground bg-background border border-input rounded-md focus:outline-none focus:ring-2 focus:ring-ring placeholder:text-sm"
             />
           </div>
           <div>
@@ -93,7 +93,7 @@ const Register: React.FC = () => {
               onChange={(e) => setEmail(e.target.value)}
               required
               placeholder="Masukkan email Anda"
-              className="w-full px-3 py-2 mt-1 text-foreground bg-background border border-input rounded-md focus:outline-none focus:ring-2 focus:ring-ring placeholder:text-sm"
+              className="w-full px-3 py-2 mt-0.5 text-foreground bg-background border border-input rounded-md focus:outline-none focus:ring-2 focus:ring-ring placeholder:text-sm"
             />
           </div>
           <div>
@@ -105,7 +105,7 @@ const Register: React.FC = () => {
               required
               minLength={6}
               placeholder="Buat kata sandi Anda (min. 6 karakter)"
-              className="w-full px-3 py-2 mt-1 text-foreground bg-background border border-input rounded-md focus:outline-none focus:ring-2 focus:ring-ring placeholder:text-sm"
+              className="w-full px-3 py-2 mt-0.5 text-foreground bg-background border border-input rounded-md focus:outline-none focus:ring-2 focus:ring-ring placeholder:text-sm"
             />
           </div>
           <button
