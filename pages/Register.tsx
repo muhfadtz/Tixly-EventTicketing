@@ -47,41 +47,42 @@ const Register: React.FC = () => {
   return (
     <div className="flex items-center justify-center min-h-[calc(100vh-12rem)]">
       <div className="w-full max-w-md p-8 space-y-6 bg-card border border-border rounded-lg shadow-sm">
-         <div className="text-center">
-            <h2 className="text-3xl font-bold text-foreground">Create an Account</h2>
-            <p className="text-muted-foreground">Join Tixly today.</p>
+         <div className="text-center space-y-2">
+            <h2 className="text-3xl font-bold text-foreground">Buat akun baru</h2>
+            <p className="text-muted-foreground">Bergabung dengan Tixly hari ini</p>
         </div>
         <form onSubmit={handleSubmit} className="space-y-6">
           {error && <p className="text-sm text-destructive text-center bg-destructive/10 border border-destructive/20 rounded-md p-3">{error}</p>}
           
           <div>
-            <label className="block text-sm font-medium text-foreground">Register as:</label>
+            <label className="block text-sm font-medium text-foreground">Daftar sebagai</label>
             <div className="mt-2 grid grid-cols-2 gap-2 rounded-md bg-muted p-1">
               <button
                 type="button"
                 onClick={() => setRole('peserta')}
                 className={`px-4 py-2 text-sm font-medium rounded ${role === 'peserta' ? 'bg-background text-foreground shadow-sm' : 'text-muted-foreground hover:bg-background/50'}`}
               >
-                Participant
+                Peserta
               </button>
               <button
                 type="button"
                 onClick={() => setRole('panitia')}
                 className={`px-4 py-2 text-sm font-medium rounded ${role === 'panitia' ? 'bg-background text-foreground shadow-sm' : 'text-muted-foreground hover:bg-background/50'}`}
               >
-                Organizer
+                Panitia
               </button>
             </div>
           </div>
 
           <div>
-            <label className="block text-sm font-medium text-foreground">Full Name</label>
+            <label className="block text-sm font-medium text-foreground">Nama Lengkap</label>
             <input
               type="text"
               value={namaLengkap}
               onChange={(e) => setNamaLengkap(e.target.value)}
               required
-              className="w-full px-3 py-2 mt-1 text-foreground bg-background border border-input rounded-md focus:outline-none focus:ring-2 focus:ring-ring"
+              placeholder="Masukkan nama lengkap Anda"
+              className="w-full px-3 py-2 mt-1 text-foreground bg-background border border-input rounded-md focus:outline-none focus:ring-2 focus:ring-ring placeholder:text-sm"
             />
           </div>
           <div>
@@ -91,18 +92,20 @@ const Register: React.FC = () => {
               value={email}
               onChange={(e) => setEmail(e.target.value)}
               required
-              className="w-full px-3 py-2 mt-1 text-foreground bg-background border border-input rounded-md focus:outline-none focus:ring-2 focus:ring-ring"
+              placeholder="Masukkan email Anda"
+              className="w-full px-3 py-2 mt-1 text-foreground bg-background border border-input rounded-md focus:outline-none focus:ring-2 focus:ring-ring placeholder:text-sm"
             />
           </div>
           <div>
-            <label className="block text-sm font-medium text-foreground">Password</label>
+            <label className="block text-sm font-medium text-foreground">Kata sandi</label>
             <input
               type="password"
               value={password}
               onChange={(e) => setPassword(e.target.value)}
               required
               minLength={6}
-              className="w-full px-3 py-2 mt-1 text-foreground bg-background border border-input rounded-md focus:outline-none focus:ring-2 focus:ring-ring"
+              placeholder="Buat kata sandi Anda (min. 6 karakter)"
+              className="w-full px-3 py-2 mt-1 text-foreground bg-background border border-input rounded-md focus:outline-none focus:ring-2 focus:ring-ring placeholder:text-sm"
             />
           </div>
           <button
@@ -113,17 +116,17 @@ const Register: React.FC = () => {
             {loading ? (
                 <>
                   <Spinner size="sm" className="text-primary-foreground" />
-                  <span className="ml-2">Creating account...</span>
+                  <span className="ml-2">Membuat akun...</span>
                 </>
             ) : (
-                'Register'
+                'Daftar'
             )}
           </button>
         </form>
          <p className="text-sm text-center text-muted-foreground">
-          Already have an account?{' '}
+          Sudah mempunyai akun?{' '}
           <Link to="/login" className="font-medium text-primary hover:underline">
-            Login here
+            Masuk disini
           </Link>
         </p>
       </div>

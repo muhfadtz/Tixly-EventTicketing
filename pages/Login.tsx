@@ -20,7 +20,7 @@ const Login: React.FC = () => {
       const userCredential = await auth.signInWithEmailAndPassword(email, password);
       // Let the AuthProvider fetch the appUser, then navigate based on role
     } catch (err: any) {
-      setError(err.code === 'auth/invalid-credential' ? 'Invalid email or password.' : 'Failed to login. Please try again.');
+      setError(err.code === 'auth/invalid-credential' ? 'Email atau kata sandi tidak sesuai.' : 'Gagal masuk. Silakan coba lagi.');
       setLoading(false);
     }
   };
@@ -38,9 +38,9 @@ const Login: React.FC = () => {
   return (
     <div className="flex items-center justify-center min-h-[calc(100vh-12rem)]">
       <div className="w-full max-w-md p-8 space-y-6 bg-card border border-border rounded-lg shadow-sm">
-        <div className="text-center">
-          <h2 className="text-3xl font-bold text-foreground">Welcome Back</h2>
-          <p className="text-muted-foreground">Login to access your account.</p>
+        <div className="text-center space-y-2">
+          <h2 className="text-3xl font-bold text-foreground">Selamat Datang</h2>
+          <p className="text-muted-foreground">Masuk untuk mengakses akun Anda</p>
         </div>
         <form onSubmit={handleSubmit} className="space-y-6">
           {error && <p className="text-sm text-destructive text-center bg-destructive/10 border border-destructive/20 rounded-md p-3">{error}</p>}
@@ -51,17 +51,19 @@ const Login: React.FC = () => {
               value={email}
               onChange={(e) => setEmail(e.target.value)}
               required
-              className="w-full px-3 py-2 mt-1 text-foreground bg-background border border-input rounded-md focus:outline-none focus:ring-2 focus:ring-ring"
+              placeholder="Masukkan email Anda"
+              className="w-full px-3 py-2 mt-1 text-foreground bg-background border border-input rounded-md focus:outline-none focus:ring-2 focus:ring-ring placeholder:text-sm"
             />
           </div>
           <div>
-            <label className="block text-sm font-medium text-foreground">Password</label>
+            <label className="block text-sm font-medium text-foreground">Kata Sandi</label>
             <input
               type="password"
               value={password}
               onChange={(e) => setPassword(e.target.value)}
               required
-              className="w-full px-3 py-2 mt-1 text-foreground bg-background border border-input rounded-md focus:outline-none focus:ring-2 focus:ring-ring"
+              placeholder="Masukkan kata sandi Anda"
+              className="w-full px-3 py-2 mt-1 text-foreground bg-background border border-input rounded-md focus:outline-none focus:ring-2 focus:ring-ring placeholder:text-sm"
             />
           </div>
           <button
@@ -72,17 +74,17 @@ const Login: React.FC = () => {
             {loading ? (
               <>
                 <Spinner size="sm" className="text-primary-foreground" />
-                <span className="ml-2">Logging in...</span>
+                <span className="ml-2">Memproses masuk...</span>
               </>
             ) : (
-              'Login'
+              'Masuk'
             )}
           </button>
         </form>
          <p className="text-sm text-center text-muted-foreground">
-          Don't have an account?{' '}
+          Belum mempunyai akun?{' '}
           <Link to="/register" className="font-medium text-primary hover:underline">
-            Register here
+            Daftar disini
           </Link>
         </p>
       </div>

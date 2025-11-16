@@ -69,8 +69,8 @@ const Layout: React.FC = () => {
               </Link>
               <div className="hidden md:block">
                 <div className="ml-10 flex items-baseline space-x-4">
-                  <NavLink to="/events">Events</NavLink>
-                  {appUser?.role === 'peserta' && <NavLink to="/my-tickets">My Tickets</NavLink>}
+                  <NavLink to="/events">Acara</NavLink>
+                  {appUser?.role === 'peserta' && <NavLink to="/my-tickets">Tiket Saya</NavLink>}
                   {appUser?.role === 'panitia' && <NavLink to="/panitia/dashboard">Dashboard</NavLink>}
                 </div>
               </div>
@@ -83,16 +83,16 @@ const Layout: React.FC = () => {
                       onClick={handleLogout}
                       className="bg-destructive text-destructive-foreground hover:bg-destructive/80 px-4 py-2 rounded-md text-sm font-medium"
                     >
-                      Logout
+                      Keluar
                     </button>
                   </>
                 ) : (
                   <div className="space-x-2">
                     <Link to="/login" className="bg-primary text-primary-foreground hover:bg-primary/90 px-4 py-2 rounded-md text-sm font-medium">
-                      Login
+                      Masuk
                     </Link>
                      <Link to="/register" className="bg-secondary text-secondary-foreground hover:bg-secondary/80 px-4 py-2 rounded-md text-sm font-medium">
-                      Register
+                      Daftar
                     </Link>
                   </div>
                 )}
@@ -106,7 +106,7 @@ const Layout: React.FC = () => {
                 aria-controls="mobile-menu"
                 aria-expanded="false"
               >
-                <span className="sr-only">Open main menu</span>
+                <span className="sr-only">Buka menu utama</span>
                 {isMobileMenuOpen ? (
                   <i data-lucide="x" className="block h-6 w-6"></i>
                 ) : (
@@ -119,29 +119,29 @@ const Layout: React.FC = () => {
 
         <div className={`${isMobileMenuOpen ? 'block' : 'hidden'} md:hidden border-t border-border`} id="mobile-menu">
           <div className="px-2 pt-2 pb-3 space-y-1 sm:px-3">
-             <MobileNavLink to="/events">Events</MobileNavLink>
-             {appUser?.role === 'peserta' && <MobileNavLink to="/my-tickets">My Tickets</MobileNavLink>}
+             <MobileNavLink to="/events">Acara</MobileNavLink>
+             {appUser?.role === 'peserta' && <MobileNavLink to="/my-tickets">Tiket Saya</MobileNavLink>}
              {appUser?.role === 'panitia' && <MobileNavLink to="/panitia/dashboard">Dashboard</MobileNavLink>}
           </div>
           <div className="pt-4 pb-3 border-t border-border">
             <div className="px-5 space-y-3">
               {appUser ? (
                 <>
-                  <p className="font-medium text-foreground">Signed in as {appUser.namaLengkap}</p>
+                  <p className="font-medium text-foreground">Masuk sebagai {appUser.namaLengkap}</p>
                   <button
                     onClick={handleLogout}
                     className="w-full text-left block bg-destructive text-destructive-foreground hover:bg-destructive/80 px-4 py-2 rounded-md text-base font-medium"
                   >
-                    Logout
+                    Keluar
                   </button>
                 </>
               ) : (
                 <div className="space-y-2">
                    <Link to="/login" onClick={closeMenu} className="block text-center bg-primary text-primary-foreground hover:bg-primary/90 px-4 py-2 rounded-md text-base font-medium">
-                      Login
+                      Masuk
                     </Link>
                      <Link to="/register" onClick={closeMenu} className="block text-center bg-secondary text-secondary-foreground hover:bg-secondary/80 px-4 py-2 rounded-md text-base font-medium">
-                      Register
+                      Daftar
                     </Link>
                 </div>
               )}
